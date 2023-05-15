@@ -56,3 +56,33 @@ body {
   background-color: #fd565f;
   color: white;
 }
+
+/* Header  */
+header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+header > div {
+  display: flex;
+}
+header button {
+  font-family: "Nanum Pen Script";
+}
+.head_btn_left {
+  width: 25%;
+  font-size: 25px;
+  justify-content: flex-start;
+}
+.head_btn_right {
+  width: 25%;
+  font-size: 25px;
+  justify-content: flex-end;
+}
+.head_text {
+  width: 50%;
+  font-size: 25px;
+  justify-content: center;
+}

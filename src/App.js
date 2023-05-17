@@ -6,10 +6,6 @@ import New from "./pages/New";
 import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 
-// Components
-import Button from "./components/Button";
-import Header from "./components/Header";
-
 const reducer = (state, action) => {
   let newState = [];
   switch (action.type) {
@@ -39,15 +35,52 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContenxt = React.createContext();
 
+const dummyData = [
+  {
+    id: 1,
+    emotion: 1,
+    content: "오늘의 일기 1번",
+    weather: "sunny",
+    date: 1684143297668,
+  },
+  {
+    id: 2,
+    emotion: 3,
+    content: "오늘의 일기 2번",
+    weather: "strom",
+    date: 1684143297669,
+  },
+  {
+    id: 3,
+    emotion: 2,
+    content: "오늘의 일기 3번",
+    weather: "snow",
+    date: 1684143297671,
+  },
+  {
+    id: 4,
+    emotion: 4,
+    content: "오늘의 일기 4번",
+    weather: "rain",
+    date: 1684143297673,
+  },
+  {
+    id: 5,
+    emotion: 5,
+    content: "오늘의 일기 5번",
+    weather: "cloudy",
+    date: 1684143297675,
+  },
+];
+
 function App() {
   // 기본경로설정
   const env = process.env;
   env.PUBLIC_URL = env.PUBLIC_URL || "";
-
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0);
   // CREATE
-  const onCreate = (date, content, emotion) => {
+  const onCreate = (date, content, emotion, weather) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -55,6 +88,7 @@ function App() {
         date: new Date(date).getTime(),
         content,
         emotion,
+        weather,
       },
     });
     dataId.current += 1;
@@ -67,7 +101,7 @@ function App() {
     });
   };
   // EDIT
-  const onEdit = (targetId, date, content, emotion) => {
+  const onEdit = (targetId, date, content, emotion, weather) => {
     dispatch({
       type: "EDIT",
       data: {
@@ -75,6 +109,7 @@ function App() {
         date: new Date(date).getTime(),
         content,
         emotion,
+        weather,
       },
     });
   };
@@ -84,26 +119,6 @@ function App() {
       <DiaryDispatchContenxt.Provider value={{ onCreate, onEdit, onRemove }}>
         <BrowserRouter>
           <div className="App">
-            <Header
-              headText={"App"}
-              leftchild={
-                <Button
-                  text={"왼쪽버튼"}
-                  onClick={() => {
-                    alert("왼쪽 클릭");
-                  }}
-                />
-              }
-              rightchild={
-                <Button
-                  text={"오른쪽버튼"}
-                  onClick={() => {
-                    alert("오른쪽 클릭");
-                  }}
-                />
-              }
-            ></Header>
-
             <Routes>
               <Route path="/" element={<Home />}></Route>
               <Route path="/New" element={<New />}></Route>

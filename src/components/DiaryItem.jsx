@@ -21,6 +21,7 @@ const DiaryItem = ({ id, emotion, date, content }) => {
         ].join(" ")}
       >
         <img
+          alt="감정"
           src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`}
         ></img>
       </div>

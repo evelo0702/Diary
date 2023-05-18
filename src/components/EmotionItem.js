@@ -14,7 +14,7 @@ const EmotionItem = ({
           isSelected ? `EmotionItem_on_${emotion_id}` : `EmotionItem_off`,
         ].join(" ")}
       >
-        <img src={emotion_img} />
+        <img alt="감정" src={emotion_img} />
         <span>{emotion_des}</span>
       </div>
     </div>

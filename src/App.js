@@ -78,7 +78,7 @@ function App() {
   const env = process.env;
   env.PUBLIC_URL = env.PUBLIC_URL || "";
   const [data, dispatch] = useReducer(reducer, dummyData);
-  const dataId = useRef(0);
+  const dataId = useRef(6);
   // CREATE
   const onCreate = (date, content, emotion, weather) => {
     dispatch({

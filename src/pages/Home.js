@@ -29,7 +29,11 @@ const Home = () => {
       const lastDay = new Date(
         curDate.getFullYear(),
         curDate.getMonth() + 1,
-        0
+        0,
+        23,
+        59,
+        59
+        // 31일을 포함시키기위한 설정
       ).getTime();
       setData(
         diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)

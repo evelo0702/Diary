@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import Header from "./Header";
 import Button from "./Button";
 import EmotionItem from "./EmotionItem.js";
@@ -44,9 +44,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const [content, setContent] = useState("");
   const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
   const navigate = useNavigate();
-  const ClickEmote = (emotion) => {
+  const ClickEmote = useCallback((emotion) => {
     setEmotion(emotion);
-  };
+  }, []);
   const submit = () => {
     if (content.length < 1) {
       contentRef.current.focus();

@@ -4,6 +4,11 @@ import Button from "./../components/Button";
 import { DiaryStateContext } from "../App";
 import DiaryList from "./../components/DiaryList";
 const Home = () => {
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `감정 일기장 `; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [curDate, setCurDate] = useState(new Date());
   const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
   const increaseMonth = () => {

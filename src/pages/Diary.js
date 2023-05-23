@@ -6,6 +6,10 @@ import { emotionList } from "../util/emotion";
 import Header from "../components/Header";
 import Button from "../components/Button";
 const Diary = () => {
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `감정 일기장 - ${id}번 일기`; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { id } = useParams(); // path의 변수명과 동일해야함
   const diaryList = useContext(DiaryStateContext);
   const navigate = useNavigate();

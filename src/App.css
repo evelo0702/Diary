@@ -188,7 +188,37 @@ header button {
   grid-template-columns: repeat(5, auto);
   gap: 2%;
 }
-.DiaryEditor textarea {
+.DiaryEditor .title_wrapper {
+  width: 50%;
+}
+.DiaryEditor .title_wrapper input {
+  font-family: "Nanum Pen Script";
+  width: 100%;
+  font-size: 20px;
+  box-sizing: border-box;
+  min-height: 30px;
+  resize: vertical;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+}
+.DiaryEditor .title_wrapper .input_count {
+  text-align: end;
+}
+.DiaryEditor .link_wrapper input {
+  font-family: "Nanum Pen Script";
+  width: 100%;
+  font-size: 20px;
+  box-sizing: border-box;
+  min-height: 30px;
+  resize: vertical;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+}
+.DiaryEditor .textarea {
   font-family: "Nanum Pen Script";
   font-size: 20px;
   box-sizing: border-box;
@@ -205,6 +235,7 @@ header button {
   justify-content: space-between;
   align-items: center;
 }
+
 /* EmotionItem */
 .EmotionItem {
   cursor: pointer;
@@ -264,13 +295,18 @@ header button {
 }
 .DiaryPage .diary_img_wrapper {
   background-color: #ececec;
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 20px;
+}
+.DiaryPage .diary_img_wrapper img {
+  width: 100px;
+  height: 100px;
 }
 .DiaryPage .diary_img_wrapper_1 {
   background-color: #64c964;
@@ -308,4 +344,7 @@ header button {
   font-size: 20px;
   font-weight: 400;
   line-height: 2.5;
+}
+.DiaryPage .diary_title_wrapper p {
+  font-size: 30px;
 }

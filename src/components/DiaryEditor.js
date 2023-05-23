@@ -36,11 +36,13 @@ const getDate = (date) => {
 };
 
 const DiaryEditor = ({ isEdit, originData }) => {
+  const [title, setTitle] = useState("");
+  const [inputCount, setInputCount] = useState(0);
   const [emotion, setEmotion] = useState(3);
   const [date, setDate] = useState(getDate(new Date()));
   const contentRef = useRef();
   const [content, setContent] = useState("");
-  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
   const navigate = useNavigate();
   const ClickEmote = (emotion) => {
     setEmotion(emotion);
@@ -56,26 +58,41 @@ const DiaryEditor = ({ isEdit, originData }) => {
       )
     ) {
       if (isEdit) {
-        onEdit(originData.id, date, content, emotion);
+        onEdit(originData.id, date, content, emotion, title);
       } else {
-        onCreate(date, content, emotion);
+        onCreate(date, content, emotion, title);
       }
+      navigate("/", { replace: true });
     }
-    navigate("/", { replace: true });
   };
-
+  const remove = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      onRemove(originData.id);
+      navigate("/", { replace: true });
+    }
+  };
   useEffect(() => {
     if (isEdit) {
       setDate(getDate(new Date()));
       setEmotion(originData.emotion);
       setContent(originData.content);
+      setTitle(originData.title);
     }
   }, [isEdit, originData]);
+
+  const onInputHandler = (e) => {
+    setInputCount(e.target.value.length);
+  };
   return (
     <div className="DiaryEditor">
       <Header
         headText={isEdit ? "일기 수정" : "새 일기 쓰기"}
         leftchild={<Button text={"뒤로가기"} onClick={() => navigate(-1)} />}
+        rightchild={
+          isEdit && (
+            <Button text={"삭제하기"} type={"negative"} onClick={remove} />
+          )
+        }
       />
 
       <div>
@@ -89,6 +106,22 @@ const DiaryEditor = ({ isEdit, originData }) => {
             onChange={(e) => setDate(e.target.value)}
           />
         </section>
+        <section>
+          <h4>일기 제목</h4>
+          <div className="input_box title_wrapper">
+            <input
+              maxLength={20}
+              value={title}
+              onChange={(e) => {
+                onInputHandler(e);
+                setTitle(e.target.value);
+              }}
+              placeholder="제목을 20자 이내로 작성해주세요"
+            ></input>
+            <div className="input_count">{inputCount}/20</div>
+          </div>
+        </section>
+
         <section>
           <h4>오늘의 감정</h4>
           <div className="input_box emotion_list_wrapper">
@@ -106,7 +139,8 @@ const DiaryEditor = ({ isEdit, originData }) => {
           <h4>오늘의 일기</h4>
           <div className="input_box text_wrapper">
             <textarea
-              placeholder="오늘은 어땠나요?"
+              className="textarea"
+              placeholder="오늘하루는 어땠나요?"
               ref={contentRef}
               value={content}
               onChange={(e) => {

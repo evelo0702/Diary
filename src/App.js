@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -29,58 +29,32 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 // context
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의 일기 1번",
-    weather: "sunny",
-    date: 1684143297668,
-  },
-  {
-    id: 2,
-    emotion: 3,
-    content: "오늘의 일기 2번",
-    weather: "strom",
-    date: 1684143297669,
-  },
-  {
-    id: 3,
-    emotion: 2,
-    content: "오늘의 일기 3번",
-    weather: "snow",
-    date: 1684143297671,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의 일기 4번",
-    weather: "rain",
-    date: 1684143297673,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의 일기 5번",
-    weather: "cloudy",
-    date: 1684143297675,
-  },
-];
-
 function App() {
   // 기본경로설정
   const env = process.env;
   env.PUBLIC_URL = env.PUBLIC_URL || "";
-  const [data, dispatch] = useReducer(reducer, dummyData);
-  const dataId = useRef(6);
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(diaryList[0].id) + 1;
+      dispatch({ type: "INIT", data: diaryList });
+      console.log(diaryList);
+    }
+  }, []);
+  const [data, dispatch] = useReducer(reducer, []);
+  const dataId = useRef(0);
   // CREATE
-  const onCreate = (date, content, emotion, weather) => {
+  const onCreate = (date, content, emotion, title) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -88,7 +62,7 @@ function App() {
         date: new Date(date).getTime(),
         content,
         emotion,
-        weather,
+        title,
       },
     });
     dataId.current += 1;
@@ -101,7 +75,7 @@ function App() {
     });
   };
   // EDIT
-  const onEdit = (targetId, date, content, emotion, weather) => {
+  const onEdit = (targetId, date, content, emotion, title) => {
     dispatch({
       type: "EDIT",
       data: {
@@ -109,7 +83,7 @@ function App() {
         date: new Date(date).getTime(),
         content,
         emotion,
-        weather,
+        title,
       },
     });
   };

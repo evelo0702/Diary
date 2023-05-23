@@ -19,9 +19,10 @@ const Diary = () => {
         setData(targetDiary);
       } else {
         alert("없는 일기 입니다.");
-        navigate("/", { replace: true });             
+        navigate("/", { replace: true });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, diaryList]);
   if (!data) {
     return <div className="DiaryPage">로딩중입니다</div>;
@@ -29,8 +30,6 @@ const Diary = () => {
     const curEmotionData = emotionList.find(
       (it) => parseInt(it.emotion_id) === data.emotion
     );
-    console.log(curEmotionData);
-    console.log(data);
     return (
       <div className="DiaryPage">
         <Header
@@ -45,19 +44,22 @@ const Diary = () => {
         />
         <article>
           <section>
-            <h4>오늘의 감정</h4>
+            <h4>오늘의 일기</h4>
             <div
               className={[
                 "diary_img_wrapper",
                 `diary_img_wrapper_${data.emotion}`,
               ].join(" ")}
             >
-              <img src={curEmotionData.emotion_img} />
+              <img src={curEmotionData.emotion_img} alt="감정이미지" />
               <div className="emotion_des">{curEmotionData.emotion_des}</div>
             </div>
-            <h4>오늘의 일기</h4>
+
+            <div className="diary_title_wrapper">
+              <p>{data.title}</p>
+            </div>
             <div className="diary_content_wrapper">
-              <p>{data.content}</p>
+              <p>{data.content}</p>{" "}
             </div>
           </section>
         </article>

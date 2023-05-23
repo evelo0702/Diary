@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
-const DiaryItem = ({ id, emotion, date, content }) => {
+const DiaryItem = ({ id, emotion, date, content, title }) => {
   const navigate = useNavigate();
   const strDate = new Date(parseInt(date)).toLocaleDateString();
 
@@ -28,7 +28,7 @@ const DiaryItem = ({ id, emotion, date, content }) => {
 
       <div onClick={goDetail} className="info_wrapper">
         <div className="diary_date">{strDate}</div>
-        <div className="diary_content_preview">{content.slice(0, 25)}</div>
+        <div className="diary_content_preview">{title}</div>
       </div>
       <div className="btn_wrapper">
         <Button onClick={goEdit} text={"수정하기"} />
